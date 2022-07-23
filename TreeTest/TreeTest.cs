@@ -16,6 +16,9 @@ namespace TreeTest
             Console.WriteLine(completeBinaryTree.ToString());
             Console.WriteLine("-------------------------------");
 
+            Console.WriteLine($"{nameof(completeBinaryTree.GetMax)}: {completeBinaryTree.GetMax()}");
+            Console.WriteLine($"{nameof(completeBinaryTree.GetMin)}: {completeBinaryTree.GetMin()}");
+            Console.WriteLine($"{nameof(completeBinaryTree.GetHeight)}: {completeBinaryTree.GetHeight()}");
             Console.WriteLine($"{nameof(completeBinaryTree.PreOrder)}");
             completeBinaryTree.PreOrder();
             Console.WriteLine($"{nameof(completeBinaryTree.InOrder)}");
@@ -34,6 +37,9 @@ namespace TreeTest
             Console.WriteLine(binarySearchTree.ToString());
             Console.WriteLine("-------------------------------");
 
+            Console.WriteLine($"{nameof(binarySearchTree.GetMax)}: {binarySearchTree.GetMax()}");
+            Console.WriteLine($"{nameof(binarySearchTree.GetMin)}: {binarySearchTree.GetMin()}");
+            Console.WriteLine($"{nameof(binarySearchTree.GetHeight)}: {binarySearchTree.GetHeight()}");
             Console.WriteLine($"{nameof(binarySearchTree.PreOrder)}");
             binarySearchTree.PreOrder();
             Console.WriteLine($"{nameof(binarySearchTree.InOrder)}");

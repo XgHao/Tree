@@ -5,17 +5,17 @@
         /// <summary>
         /// Data.
         /// </summary>
-        public T? Data { get; set; }
+        public T Data { get; set; }
 
         /// <summary>
         /// Left.
         /// </summary>
-        public Node<T> Left { get; set; }
+        public Node<T>? Left { get; set; }
 
         /// <summary>
         /// Right.
         /// </summary>
-        public Node<T> Right { get; set; }
+        public Node<T>? Right { get; set; }
 
         /// <summary>
         /// 先序遍历：根 -> 左 -> 右.
@@ -78,6 +78,37 @@
 
             // 打印当前根数据.
             Console.WriteLine(Data);
+        }
+
+        /// <summary>
+        /// 获取节点深度.
+        /// </summary>
+        /// <returns></returns>
+        public int GetDepth()
+        {
+            if (Data == null)
+            {
+                return 0;
+            }
+
+            // 左右深度
+            var lDepth = Left?.GetDepth() ?? 0;
+            var rDepth = Right?.GetDepth()?? 0;
+            return Math.Max(lDepth, rDepth) + 1;
+        }
+
+        /// <summary>
+        /// 获取左子树结果.
+        /// </summary>
+        /// <param name="func"></param>
+        /// <param name="@default"></param>
+        /// <returns></returns>
+        public T GetData(Func<T, T, T, T> func, T @default)
+        {
+            var lMax = Left == null ? @default : Left.GetData(func, @default);
+            var rMax = Right == null ? @default : Right.GetData(func, @default);
+
+            return func(Data, lMax, rMax);
         }
     }
 }

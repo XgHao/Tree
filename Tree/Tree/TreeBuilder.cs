@@ -1,4 +1,6 @@
-﻿namespace Tree.Tree
+﻿using Common;
+
+namespace Tree.Tree
 {
     public static class TreeBuilder
     {
@@ -7,6 +9,7 @@
         /// </summary>
         /// <param name="values"></param>
         /// <returns></returns>
+        [MethodTimer]
         public static CompleteBinaryTree BuildCompleteBinaryTree(this IEnumerable<int> values)
         {
             var tree = new CompleteBinaryTree();
@@ -23,6 +26,7 @@
         /// </summary>
         /// <param name="values"></param>
         /// <returns></returns>
+        [MethodTimer]
         public static BinarySearchTree BuildBinarySearchTree(this IEnumerable<int> values)
         {
             var tree = new BinarySearchTree();

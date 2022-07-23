@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Tree.Tree
+﻿namespace Tree.Tree
 {
     /// <summary>
     /// 完全二叉树.
@@ -50,5 +44,24 @@ namespace Tree.Tree
             }
         }
 
+        public override int GetMax()
+        {
+            if (Root == null)
+            {
+                return -1;
+            }
+
+            return Root.GetData((parent, left, right) => Math.Max(Math.Max(parent, left), right), int.MinValue);
+        }
+
+        public override int GetMin()
+        {
+            if (Root == null)
+            {
+                return -1;
+            }
+
+            return Root.GetData((parent, left, right) => Math.Min(Math.Min(parent, left), right), int.MaxValue);
+        }
     }
 }

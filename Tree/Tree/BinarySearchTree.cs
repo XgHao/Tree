@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Tree.Tree
+﻿namespace Tree.Tree
 {
     /// <summary>
     /// 二叉搜索树.
@@ -60,6 +54,38 @@ namespace Tree.Tree
                     curNode = curNode.Right;
                 }
             }
+        }
+
+        public override int GetMax()
+        {
+            if (Root == null)
+            {
+                return -1;
+            }
+
+            var cur = Root;
+            while (cur.Right != null)
+            {
+                cur = cur.Right;
+            }
+
+            return cur.Data;
+        }
+
+        public override int GetMin()
+        {
+            if (Root == null)
+            {
+                return -1;
+            }
+
+            var cur = Root;
+            while (cur.Left != null)
+            {
+                cur = cur.Left;
+            }
+
+            return cur.Data;
         }
     }
 
