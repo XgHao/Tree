@@ -1,41 +1,40 @@
 ﻿using Common;
 
-namespace Tree.Tree
+namespace Tree.Tree;
+
+public static class TreeBuilder
 {
-    public static class TreeBuilder
+    /// <summary>
+    /// 构建完全二叉树.
+    /// </summary>
+    /// <param name="values"></param>
+    /// <returns></returns>
+    [MethodTimer]
+    public static CompleteBinaryTree BuildCompleteBinaryTree(this IEnumerable<int> values)
     {
-        /// <summary>
-        /// 构建完全二叉树.
-        /// </summary>
-        /// <param name="values"></param>
-        /// <returns></returns>
-        [MethodTimer]
-        public static CompleteBinaryTree BuildCompleteBinaryTree(this IEnumerable<int> values)
+        var tree = new CompleteBinaryTree();
+        foreach (var value in values)
         {
-            var tree = new CompleteBinaryTree();
-            foreach (var value in values)
-            {
-                tree.Insert(value);
-            }
-
-            return tree;
+            tree.Insert(value);
         }
 
-        /// <summary>
-        /// 构建二叉搜索树.
-        /// </summary>
-        /// <param name="values"></param>
-        /// <returns></returns>
-        [MethodTimer]
-        public static BinarySearchTree BuildBinarySearchTree(this IEnumerable<int> values)
-        {
-            var tree = new BinarySearchTree();
-            foreach (var value in values)
-            {
-                tree.Insert(value);
-            }
+        return tree;
+    }
 
-            return tree;
+    /// <summary>
+    /// 构建二叉搜索树.
+    /// </summary>
+    /// <param name="values"></param>
+    /// <returns></returns>
+    [MethodTimer]
+    public static BinarySearchTree BuildBinarySearchTree(this IEnumerable<int> values)
+    {
+        var tree = new BinarySearchTree();
+        foreach (var value in values)
+        {
+            tree.Insert(value);
         }
+
+        return tree;
     }
 }

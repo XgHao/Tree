@@ -1,107 +1,106 @@
 ﻿using System.Text;
 using Common;
 
-namespace Tree.Tree
+namespace Tree.Tree;
+
+/// <summary>
+/// 树.
+/// </summary>
+/// <typeparam name="T"></typeparam>
+public abstract class Tree<T>
 {
     /// <summary>
-    /// 树.
+    /// Root.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public abstract class Tree<T>
+    public Node<T>? Root { get; set; }
+
+    /// <summary>
+    /// 插入值.
+    /// </summary>
+    /// <param name="value"></param>
+    public abstract void Insert(T value);
+
+    /// <summary>
+    /// 获取最大值.
+    /// </summary>
+    /// <returns></returns>
+    public abstract T GetMax();
+
+    /// <summary>
+    /// 获取最小值
+    /// </summary>
+    /// <returns></returns>
+    public abstract T GetMin();
+
+    /// <summary>
+    /// 先序遍历：根 -> 左 -> 右.
+    /// </summary>
+    [MethodTimer]
+    public void PreOrder()
     {
-        /// <summary>
-        /// Root.
-        /// </summary>
-        public Node<T>? Root { get; set; }
+        Root?.PreOrder();
+    }
 
-        /// <summary>
-        /// 插入值.
-        /// </summary>
-        /// <param name="value"></param>
-        public abstract void Insert(T value);
+    /// <summary>
+    /// 中序遍历：左 -> 根 ->  右.
+    /// </summary>
+    [MethodTimer(MethodName = "中序遍历")]
+    public void InOrder()
+    {
+        Root?.InOrder();
+    }
 
-        /// <summary>
-        /// 获取最大值.
-        /// </summary>
-        /// <returns></returns>
-        public abstract T GetMax();
+    /// <summary>
+    /// 后序遍历：左 -> 右 -> 根.
+    /// </summary>
+    [MethodTimer(MethodName = "后序遍历")]
+    public void PostOrder()
+    {
+        Root?.PostOrder();
+    }
 
-        /// <summary>
-        /// 获取最小值
-        /// </summary>
-        /// <returns></returns>
-        public abstract T GetMin();
+    /// <summary>
+    /// 获取树的高度.
+    /// </summary>
+    /// <returns></returns>
+    [MethodTimer(MethodName = "计算树高度")]
+    public int GetHeight()
+    {
+        return Root?.GetDepth() ?? 0;
+    }
 
-        /// <summary>
-        /// 先序遍历：根 -> 左 -> 右.
-        /// </summary>
-        [MethodTimer]
-        public void PreOrder()
+    [MethodTimer(MethodName = "打印树")]
+    public override string ToString()
+    {
+        if (Root == null)
         {
-            Root?.PreOrder();
+            return string.Empty;
         }
 
-        /// <summary>
-        /// 中序遍历：左 -> 根 ->  右.
-        /// </summary>
-        [MethodTimer]
-        public void InOrder()
+        var res = new StringBuilder();
+        var deep = 1;
+        var nodes = new Queue<Node<T>?>();
+        nodes.Enqueue(Root);
+        while (true)
         {
-            Root?.InOrder();
-        }
-
-        /// <summary>
-        /// 后序遍历：左 -> 右 -> 根.
-        /// </summary>
-        [MethodTimer]
-        public void PostOrder()
-        {
-            Root?.PostOrder();
-        }
-
-        /// <summary>
-        /// 获取树的高度.
-        /// </summary>
-        /// <returns></returns>
-        [MethodTimer]
-        public int GetHeight()
-        {
-            return Root?.GetDepth() ?? 0;
-        }
-
-        [MethodTimer]
-        public override string ToString()
-        {
-            if (Root == null)
+            for (int index = 0; index < Math.Pow(2, deep - 1); index++)
             {
-                return string.Empty;
-            }
+                var node = nodes.Dequeue();
+                var data = node == null ? " " : node.Data?.ToString();
+                res.Append($"[{data}] ");
 
-            var res = new StringBuilder();
-            var deep = 1;
-            var nodes = new Queue<Node<T>?>();
-            nodes.Enqueue(Root);
-            while (true)
+                nodes.Enqueue(node?.Left);
+                nodes.Enqueue(node?.Right);
+            }
+            res.AppendLine();
+
+            deep++;
+            if (nodes.All(e => e == null))
             {
-                for (int index = 0; index < Math.Pow(2, deep - 1); index++)
-                {
-                    var node = nodes.Dequeue();
-                    var data = node == null ? " " : node.Data?.ToString();
-                    res.Append($"[{data}] ");
-
-                    nodes.Enqueue(node?.Left);
-                    nodes.Enqueue(node?.Right);
-                }
-                res.AppendLine();
-
-                deep++;
-                if (nodes.All(e => e == null))
-                {
-                    break;
-                }
+                break;
             }
-
-            return res.ToString();
         }
+
+        return res.ToString();
     }
 }

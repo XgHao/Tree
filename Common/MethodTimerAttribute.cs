@@ -2,37 +2,33 @@
 using PostSharp.Aspects;
 using PostSharp.Serialization;
 
-namespace Common
+namespace Common;
+
+/// <summary>
+/// 方法计时器.
+/// </summary>
+[PSerializable]
+[AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
+public class MethodTimerAttribute : OnMethodBoundaryAspect
 {
     /// <summary>
-    /// 方法计时器.
+    /// 方法名.
     /// </summary>
-    [PSerializable]
-    [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
-    public class MethodTimerAttribute : OnMethodBoundaryAspect
+    public string? MethodName { get; set; }
+
+    public override void OnEntry(MethodExecutionArgs args)
     {
-        private static readonly Stopwatch _sp;
+        var sp = Stopwatch.StartNew();
+        args.MethodExecutionTag = sp;
+    }
 
-        static MethodTimerAttribute()
+    public override void OnSuccess(MethodExecutionArgs args)
+    {
+        if (args.MethodExecutionTag is Stopwatch sp)
         {
-            _sp = Stopwatch.StartNew();
-        }
-
-        /// <summary>
-        /// 方法名.
-        /// </summary>
-        public string MethodName { get; set; }
-
-        public override void OnEntry(MethodExecutionArgs args)
-        {
-            _sp.Restart();
-        }
-
-        public override void OnSuccess(MethodExecutionArgs args)
-        {
-            _sp.Stop();
+            sp.Stop();
             var methodName = string.IsNullOrEmpty(MethodName) ? args.Method.Name : MethodName;
-            Console.WriteLine($"【LOG:{methodName}: Total use {_sp.ElapsedMilliseconds}ms.】");
+            Console.WriteLine($"【LOG:{methodName}: Total use {sp.ElapsedMilliseconds}ms.】");
         }
     }
 }

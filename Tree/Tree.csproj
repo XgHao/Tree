@@ -8,9 +8,11 @@
 	<NoWarn>8618;8625</NoWarn>
   </PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="PostSharp" Version="6.10.13" />
-	</ItemGroup>
-	<ItemGroup>
 	  <ProjectReference Include="..\Common\Common.csproj" />
 	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="PostSharp" Version="2023.0.3" />
+	</ItemGroup>
+
 </Project>
